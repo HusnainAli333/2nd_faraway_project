@@ -7,12 +7,30 @@ export default function App() {
       return [...items, item];
     });
   }
+  function handleDeleteItems(id) {
+    setItems((items) => {
+      return items.filter((value) => {
+        return value.id !== id;
+      });
+    });
+  }
+  function handlePacked(id) {
+    setItems((items) => {
+      return items.map((value) => {
+        return value.id === id ? { ...value, packed: !value.packed } : value;
+      });
+    });
+  }
   return (
     <div className="app">
       <Logo />
       <Form handleItems={handleItems} />
-      <PackingList items={items} />
-      <Stats />
+      <PackingList
+        items={items}
+        handleDeleteItems={handleDeleteItems}
+        handlePacked={handlePacked}
+      />
+      <Stats items={items} />
     </div>
   );
 }
@@ -63,20 +81,28 @@ function Form({ handleItems }) {
     </form>
   );
 }
-function PackingList({ items }) {
+function PackingList({ items, handleDeleteItems, handlePacked }) {
+  function getId(id) {
+    handleDeleteItems(id);
+  }
   return (
     <div className="list">
       <ul>
         {items.map((value) => {
           return (
             <li>
+              <input
+                type="checkbox"
+                value={value.packed}
+                onChange={() => handlePacked(value.id)}
+              />
               <span
                 style={value.packed ? { textDecoration: "line-through" } : {}}
               >
                 {value.quantity}
                 {value.description}
               </span>
-              <button>❌</button>
+              <button onClick={() => getId(value.id)}>❌</button>
             </li>
           );
         })}
@@ -84,10 +110,19 @@ function PackingList({ items }) {
     </div>
   );
 }
-function Stats() {
+function Stats({ items }) {
+  if (!items.length) return <p className="stats">Start Adding some stuff 👌</p>;
+  const length = items.filter((value) => {
+    return value.packed === true;
+  });
+
+  const percentage = Math.round((length.length / items.length) * 100);
   return (
     <footer className="stats">
-      <em>You have X items on ur list</em>
+      <em>
+        You have {items.length} items on Your list and you already packed{" "}
+        {length.length} ({percentage}%)
+      </em>
     </footer>
   );
 }
