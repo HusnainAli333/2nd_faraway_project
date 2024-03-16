@@ -29,6 +29,7 @@ export default function App() {
         items={items}
         handleDeleteItems={handleDeleteItems}
         handlePacked={handlePacked}
+        setItems={setItems}
       />
       <Stats items={items} />
     </div>
@@ -37,6 +38,7 @@ export default function App() {
 function Logo() {
   return <h1>👜 Far Away</h1>;
 }
+
 function Form({ handleItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -81,14 +83,28 @@ function Form({ handleItems }) {
     </form>
   );
 }
-function PackingList({ items, handleDeleteItems, handlePacked }) {
+function PackingList({ items, handleDeleteItems, handlePacked, setItems }) {
+  const [sort, setSort] = useState("input");
+  let sortItem;
+  if (sort === "input") sortItem = items;
+  if (sort === "Description") {
+    sortItem = items
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description));
+  }
+  function clearList() {
+    const confirm = window.confirm("Are You sure u want to clear Items?");
+    if (confirm) {
+      setItems([]);
+    }
+  }
   function getId(id) {
     handleDeleteItems(id);
   }
   return (
     <div className="list">
       <ul>
-        {items.map((value) => {
+        {sortItem.map((value) => {
           return (
             <li>
               <input
@@ -100,6 +116,7 @@ function PackingList({ items, handleDeleteItems, handlePacked }) {
                 style={value.packed ? { textDecoration: "line-through" } : {}}
               >
                 {value.quantity}
+                {"   "}
                 {value.description}
               </span>
               <button onClick={() => getId(value.id)}>❌</button>
@@ -107,6 +124,18 @@ function PackingList({ items, handleDeleteItems, handlePacked }) {
           );
         })}
       </ul>
+      <div className="actions">
+        <select
+          value={sort}
+          onChange={(event) => {
+            return setSort(event.target.value);
+          }}
+        >
+          <option value="input"> Sort by input</option>
+          <option value="Description"> sort by Description</option>
+        </select>
+        <button onClick={clearList}>Clear list </button>
+      </div>
     </div>
   );
 }
