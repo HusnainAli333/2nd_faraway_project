@@ -9,7 +9,7 @@ This project Provides:
 3.sort by Description or input.
 <br/>
 4.clear the items.
-![Screenshot (265)](https://github.com/HusnainAli333/2nd_faraway_project/assets/130205723/ec7b98bf-247c-4dcb-8c02-c906f7569160)
+![Screenshot (266)](https://github.com/HusnainAli333/2nd_faraway_project/assets/130205723/1bd6fd74-2164-444b-af65-2e1380d830f5)
 
 
 https://github.com/HusnainAli333/2nd_faraway_project/assets/130205723/a5c96415-ce21-4931-972f-c6f48b28fd55
