@@ -10,3 +10,7 @@ This project Provides:
 <br/>
 4.clear the items.
 ![Screenshot (265)](https://github.com/HusnainAli333/2nd_faraway_project/assets/130205723/ec7b98bf-247c-4dcb-8c02-c906f7569160)
+
+
+https://github.com/HusnainAli333/2nd_faraway_project/assets/130205723/a5c96415-ce21-4931-972f-c6f48b28fd55
+
